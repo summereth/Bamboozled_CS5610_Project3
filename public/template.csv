@@ -1,2 +1,2 @@
-Data will be read from row #3. All columns are required.
-question,option1,option2,option3,option4,correctOption(please only input number 1~4),points(how much points for each question)
+Data will be read from row #3. All columns are required. For "correctOption", please only input number from 1~n where n is the number of option. For "points", please input a number that represents how much points earned for each question
+question,correctOption,points,option1,option2,option3,option4

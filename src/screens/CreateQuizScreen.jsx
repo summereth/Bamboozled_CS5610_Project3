@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Card, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
+import { parseCSVFile, parseExcelFile } from "../utils/quizFileParser.js";
 
 export default function CreateQuizScreen() {
   const [quizName, setQuizName] = useState("");
@@ -10,23 +11,52 @@ export default function CreateQuizScreen() {
   const [selectedFile, setSelectedFile] = useState(null);
   const navigate = useNavigate();
 
-  const handleFileChange = (e) => {
+  function handleFileChange(e) {
     if (e.target.files.length > 0) {
       setSelectedFile(e.target.files[0]);
     }
-  };
+  }
 
-  const handleSubmit = (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
 
-    console.log({
-      quizName,
-      quizTime: hasTimer ? quizTime : "No time limit",
-      selectedFile,
-    });
+    // Check file extension
+    const fileExtension = selectedFile.name.split(".").pop().toLowerCase();
+
+    try {
+      // Parse file and retrieve questions
+      let questions = {};
+      if (fileExtension === "csv") {
+        questions = await parseCSVFile(selectedFile);
+      } else if (fileExtension === "xlsx" || fileExtension === "xls") {
+        questions = await parseExcelFile(selectedFile);
+      } else {
+        alert("Please upload csv or xlsx file");
+      }
+
+      // Construct quizData and send req to server
+      const quizData = {
+        name: quizName,
+        description: quizDesc,
+        timeLimit: hasTimer ? quizTime : null,
+        questions,
+      };
+      console.log("Creating quiz: ", quizData);
+
+      await fetch("http://localhost:3000/api/quiz/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(quizData),
+      });
+    } catch (error) {
+      console.error("Error processing file:", error);
+      alert("Error processing file. Please check the format and try again.");
+    }
 
     navigate("/");
-  };
+  }
 
   return (
     <Container className="py-4">
