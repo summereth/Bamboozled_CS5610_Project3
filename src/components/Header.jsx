@@ -19,7 +19,7 @@ export default function Header() {
         {isHomePage && (
           <Button
             as={Link}
-            to="/create-quiz"
+            to="/create"
             variant="primary"
             className="ms-auto rounded-pill"
           >

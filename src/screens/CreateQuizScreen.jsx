@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Container, Form, Button, Card, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function CreateQuizScreen() {
   const [quizName, setQuizName] = useState("");
@@ -8,6 +8,7 @@ export default function CreateQuizScreen() {
   const [quizTime, setQuizTime] = useState("");
   const [hasTimer, setHasTimer] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const navigate = useNavigate();
 
   const handleFileChange = (e) => {
     if (e.target.files.length > 0) {
@@ -23,6 +24,8 @@ export default function CreateQuizScreen() {
       quizTime: hasTimer ? quizTime : "No time limit",
       selectedFile,
     });
+
+    navigate("/");
   };
 
   return (
@@ -96,6 +99,7 @@ export default function CreateQuizScreen() {
                 type="file"
                 onChange={handleFileChange}
                 accept=".csv,.xlsx"
+                required
               />
             </Form.Group>
 
