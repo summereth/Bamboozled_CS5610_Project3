@@ -43,7 +43,7 @@ export default function CreateQuizScreen() {
       };
       console.log("Creating quiz: ", quizData);
 
-      await fetch("http://localhost:3000/api/quiz/create", {
+      await fetch("/api/quiz/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -100,7 +100,7 @@ export default function CreateQuizScreen() {
 
             {hasTimer && (
               <Form.Group className="mb-4">
-                <Form.Label>Quiz Time</Form.Label>
+                <Form.Label>Quiz Time (in seconds)</Form.Label>
                 <Form.Control
                   type="text"
                   placeholder="Enter the quiz time"
