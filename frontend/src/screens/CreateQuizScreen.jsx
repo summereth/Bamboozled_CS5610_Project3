@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Container, Form, Button, Card, Row, Col } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { parseCSVFile, parseExcelFile } from "../utils/quizFileParser.js";
+import { toast } from "react-toastify";
 
 export default function CreateQuizScreen() {
   const [quizName, setQuizName] = useState("");
@@ -31,7 +32,7 @@ export default function CreateQuizScreen() {
       } else if (fileExtension === "xlsx" || fileExtension === "xls") {
         questions = await parseExcelFile(selectedFile);
       } else {
-        alert("Please upload csv or xlsx file");
+        toast.error("Please upload csv or xlsx file");
       }
 
       // Construct quizData and send req to server
@@ -43,16 +44,23 @@ export default function CreateQuizScreen() {
       };
       console.log("Creating quiz: ", quizData);
 
-      await fetch("/api/quiz/create", {
+      const res = await fetch("/api/quiz/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(quizData),
       });
+      if (res.ok) toast.success("Quiz created successfully");
+      else {
+        const data = await res.json();
+        toast.error(data.message);
+      }
     } catch (error) {
       console.error("Error processing file:", error);
-      alert("Error processing file. Please check the format and try again.");
+      toast.error(
+        "Error processing file. Please check the format and try again.",
+      );
     }
 
     navigate("/");
