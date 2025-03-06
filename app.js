@@ -1,23 +1,25 @@
 import express from "express";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
+import logger from "morgan";
+import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 import quizRoutes from "./routes/quizRoutes.js";
-import cors from "cors";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 3000;
 
+// middleware
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-// Enable CORS for all routes
-app.use(cors());
+app.use(express.static(path.join(__dirname, "frontend/dist")));
 
 // routes
 app.use("/api/quiz", quizRoutes);
-
-app.listen(PORT, () => {
-  console.log("Server running on port: ", PORT);
-});
 
 export default app;
