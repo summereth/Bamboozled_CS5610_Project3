@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { insertOneQuiz, getAllQuizzes } from "../db/quizes.js";
+import { insertOneQuiz, fetchAllQuizzes, fetchQuizById } from "../db/quizes.js";
 
 async function getQuizes(req, res) {
   try {
-    const quizzes = await getAllQuizzes();
+    const quizzes = await fetchAllQuizzes();
     res.json(quizzes);
   } catch (error) {
     console.error("[Server] Error fetching quizzes:", error);
@@ -11,9 +11,18 @@ async function getQuizes(req, res) {
   }
 }
 
-function getQuizById(req, res) {
-  console.log("GET /:id", req);
-  res.send("hello world");
+async function getQuizById(req, res) {
+  try {
+    const quiz = await fetchQuizById(req.params.id);
+    if (!quiz) {
+      res.status(404).send("Quiz not found");
+      return;
+    }
+    res.json(quiz);
+  } catch (error) {
+    console.error("[Server] Error fetching quiz by id:", error);
+    res.status(500).send(error);
+  }
 }
 
 function updateQuiz(req, res) {
@@ -79,7 +88,7 @@ async function createQuiz(req, res) {
 
 const router = Router();
 router.get("/", getQuizes);
-router.route("/quiz/:id").get(getQuizById).put(updateQuiz).delete(deleteQuiz);
+router.route("/:id").get(getQuizById).put(updateQuiz).delete(deleteQuiz);
 router.post("/create", createQuiz);
 
 export default router;

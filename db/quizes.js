@@ -10,7 +10,7 @@ function getClientAndCollection() {
   return { client, collection };
 }
 
-async function getAllQuizzes() {
+async function fetchAllQuizzes() {
   const { client, collection } = getClientAndCollection();
 
   try {
@@ -20,6 +20,24 @@ async function getAllQuizzes() {
     return result;
   } catch (error) {
     console.error("[DB] Error getting all quizzes: ", error);
+    throw error;
+  } finally {
+    if (client) {
+      await client.close();
+    }
+  }
+}
+
+async function fetchQuizById(id) {
+  const { client, collection } = getClientAndCollection();
+
+  try {
+    await client.connect();
+
+    const result = await collection.findOne({ _id: new ObjectId(id) });
+    return result;
+  } catch (error) {
+    console.error("[DB] Error getting quiz by id: ", error);
     throw error;
   } finally {
     if (client) {
@@ -55,4 +73,4 @@ async function insertOneQuiz(quiz) {
   }
 }
 
-export { insertOneQuiz, getAllQuizzes };
+export { insertOneQuiz, fetchAllQuizzes, fetchQuizById };
