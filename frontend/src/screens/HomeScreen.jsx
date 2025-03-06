@@ -1,94 +1,55 @@
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import QuizCard from "../components/QuizCard";
-
-const quizzes = [
-  {
-    id: 1,
-    title: "AWS Certified Cloud Practitioner - Quiz 1",
-    description:
-      "Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. Quiz Description. ",
-    questions: 50,
-    highestScore: 98,
-  },
-  {
-    id: 2,
-    title: "AWS Certified Cloud Practitioner - Quiz 2",
-    description: "Quiz Description",
-    questions: 50,
-    highestScore: 98,
-  },
-  {
-    id: 3,
-    title: "AWS Certified Cloud Practitioner - Quiz 3",
-    description: "Quiz Description",
-    questions: 50,
-    highestScore: 98,
-  },
-  {
-    id: 4,
-    title: "React Knowledge - Quiz 1",
-    description: "Quiz Description",
-    questions: 50,
-    highestScore: 98,
-  },
-  {
-    id: 5,
-    title: "React Knowledge - Quiz 2",
-    description: "Quiz Description",
-    questions: 50,
-    highestScore: 98,
-  },
-  {
-    id: 6,
-    title: "React Knowledge - Quiz 3",
-    description: "Quiz Description",
-    questions: 50,
-    highestScore: 98,
-  },
-  {
-    id: 7,
-    title: "FRIENDS TV Show Knowledge - Quiz 1",
-    description: "Quiz Description",
-    questions: 50,
-    highestScore: 98,
-  },
-  {
-    id: 8,
-    title: "FRIENDS TV Show Knowledge - Quiz 2",
-    description: "Quiz Description",
-    questions: 50,
-    highestScore: 98,
-  },
-  {
-    id: 9,
-    title: "FRIENDS TV Show Knowledge - Quiz 3",
-    description: "Quiz Description",
-    questions: 50,
-    highestScore: 98,
-  },
-];
+import { useEffect, useState } from "react";
+import Loader from "../components/Loader.jsx";
+import { toast } from "react-toastify";
 
 export default function HomeScreen() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [quizzes, setQuizzes] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/quiz")
+      .then((res) => res.json())
+      .then((data) => setQuizzes(data))
+      .catch((error) => {
+        console.error("[HomeScreen] Error fetching quizzes: ", error);
+        toast.error(
+          "An error occurred while fetching quizzes: " + error.message,
+        );
+        setError(error.message || "An error occurred while fetching quizzes");
+      })
+      .finally(() => setIsLoading(false));
+  }, []);
+
   return (
     <Container className="py-4">
-      <Row>
-        {quizzes.map((quiz) => (
-          <Col key={quiz.id} sm={12} md={6} lg={4} xl={4}>
-            <Link
-              to={`/quiz/${quiz.id}`}
-              className="text-decoration-none text-dark"
-            >
-              <QuizCard
-                title={quiz.title}
-                description={quiz.description}
-                questions={quiz.questions}
-                highestScore={quiz.highestScore}
-              />
-            </Link>
-          </Col>
-        ))}
-      </Row>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        !error && (
+          <Row>
+            {quizzes.map((quiz) => (
+              <Col key={quiz._id} sm={12} md={6} lg={4} xl={4}>
+                <Link
+                  to={`/quiz/${quiz._id}`}
+                  className="text-decoration-none text-dark"
+                >
+                  <QuizCard
+                    title={quiz.name}
+                    description={quiz.description}
+                    questions={quiz.questions.length}
+                    highestScore={0}
+                    totalPoints={quiz.totalPoints}
+                  />
+                </Link>
+              </Col>
+            ))}
+          </Row>
+        )
+      )}
     </Container>
   );
 }

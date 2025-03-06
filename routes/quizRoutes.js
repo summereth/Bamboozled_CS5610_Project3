@@ -1,9 +1,14 @@
 import { Router } from "express";
-import { insertOneQuiz } from "../db/quizes.js";
+import { insertOneQuiz, getAllQuizzes } from "../db/quizes.js";
 
-function getQuizes(req, res) {
-  console.log("GET /", req);
-  res.send("hello world");
+async function getQuizes(req, res) {
+  try {
+    const quizzes = await getAllQuizzes();
+    res.json(quizzes);
+  } catch (error) {
+    console.error("[Server] Error fetching quizzes:", error);
+    res.status(500).send(error);
+  }
 }
 
 function getQuizById(req, res) {

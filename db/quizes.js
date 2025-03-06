@@ -10,6 +10,24 @@ function getClientAndCollection() {
   return { client, collection };
 }
 
+async function getAllQuizzes() {
+  const { client, collection } = getClientAndCollection();
+
+  try {
+    await client.connect();
+
+    const result = await collection.find().toArray();
+    return result;
+  } catch (error) {
+    console.error("[DB] Error getting all quizzes: ", error);
+    throw error;
+  } finally {
+    if (client) {
+      await client.close();
+    }
+  }
+}
+
 async function insertOneQuiz(quiz) {
   const { client, collection } = getClientAndCollection();
   const newQuiz = {
@@ -37,4 +55,4 @@ async function insertOneQuiz(quiz) {
   }
 }
 
-export { insertOneQuiz };
+export { insertOneQuiz, getAllQuizzes };

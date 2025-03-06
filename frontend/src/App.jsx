@@ -5,6 +5,8 @@ import Header from "./components/Header.jsx";
 import HomeScreen from "./screens/HomeScreen.jsx";
 import CreateQuizScreen from "./screens/CreateQuizScreen.jsx";
 import QuizScreen from "./screens/QuizScreen.jsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
           <Route path="/quiz/:id" element={<QuizScreen />} />
         </Routes>
       </main>
+      <ToastContainer />
     </Router>
   );
 }
