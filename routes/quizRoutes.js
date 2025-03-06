@@ -34,7 +34,7 @@ async function createQuiz(req, res) {
       !question.question ||
       !question.options ||
       !question.options.length ||
-      !question.correctOption
+      question.correctOption === undefined
     ) {
       res
         .status(400)
