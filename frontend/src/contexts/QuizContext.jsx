@@ -36,6 +36,21 @@ function reducer(state, action) {
     case "dataFailed": {
       return { ...state, status: "error" };
     }
+    case "start": {
+      return { ...state, status: "active" };
+    }
+    case "newAnswer": {
+      const question = state.questions[state.index];
+
+      return {
+        ...state,
+        answer: action.payload,
+        points:
+          state.points + question.correctOption === action.payload
+            ? question.points
+            : 0,
+      };
+    }
     default:
       throw new Error("Unknown action in reducer of QuizContext");
   }
