@@ -7,6 +7,8 @@ import CreateQuizScreen from "./screens/CreateQuizScreen.jsx";
 import QuizScreen from "./screens/QuizScreen.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { QuizProvider } from "./contexts/QuizContext.jsx";
+import "./index.css";
 
 function App() {
   return (
@@ -16,7 +18,14 @@ function App() {
         <Routes>
           <Route path="/" element={<HomeScreen />} />
           <Route path="/create" element={<CreateQuizScreen />} />
-          <Route path="/quiz/:id" element={<QuizScreen />} />
+          <Route
+            path="/quiz/:id"
+            element={
+              <QuizProvider>
+                <QuizScreen />
+              </QuizProvider>
+            }
+          />
         </Routes>
       </main>
       <ToastContainer />
