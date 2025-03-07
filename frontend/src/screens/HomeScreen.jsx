@@ -4,11 +4,13 @@ import QuizCard from "../components/QuizCard";
 import { useEffect, useState } from "react";
 import Loader from "../components/Loader.jsx";
 import { toast } from "react-toastify";
+import useLocalStorageState from "../hooks/useLocalStorageState.js";
 
 export default function HomeScreen() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quizzes, setQuizzes] = useState([]);
+  const [highestScores] = useLocalStorageState({}, "highestScores");
 
   useEffect(() => {
     fetch("/api/quiz")
@@ -41,7 +43,7 @@ export default function HomeScreen() {
                     title={quiz.name}
                     description={quiz.description}
                     questions={quiz.questions.length}
-                    highestScore={0}
+                    highestScore={highestScores[quiz._id] || undefined}
                     totalPoints={quiz.totalPoints}
                   />
                 </Link>

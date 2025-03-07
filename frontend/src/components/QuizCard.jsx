@@ -26,7 +26,7 @@ export default function QuizCard({
             <span className="d-flex align-items-center">
               <BsTrophyFill className="text-warning me-2" size={12} />
               <small>
-                Highest Score: {highestScore}/{totalPoints}
+                Highest Score: {highestScore || "-"}/{totalPoints}
               </small>
             </span>
           </div>
