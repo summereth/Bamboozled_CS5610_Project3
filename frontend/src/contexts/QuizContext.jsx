@@ -26,6 +26,7 @@ function reducer(state, action) {
         ...state,
         quizName: action.payload.name,
         quizDescription: action.payload.description,
+        questionNum: action.payload.questionNum,
         questions: action.payload.questions,
         totalPoints: action.payload.totalPoints,
         highestScore: action.payload.highestScore,

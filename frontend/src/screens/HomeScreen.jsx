@@ -42,7 +42,7 @@ export default function HomeScreen() {
                   <QuizCard
                     title={quiz.name}
                     description={quiz.description}
-                    questions={quiz.questions.length}
+                    questionNum={quiz.questionNum}
                     highestScore={highestScores[quiz._id] || undefined}
                     totalPoints={quiz.totalPoints}
                   />

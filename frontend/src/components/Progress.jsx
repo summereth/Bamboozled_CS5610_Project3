@@ -1,19 +1,31 @@
 import useQuiz from "../contexts/useQuiz";
+import { ProgressBar, Container } from "react-bootstrap";
 
 function Progress() {
   const { index, questionNum, totalPoints, points, answer } = useQuiz();
 
-  return (
-    <header className="progress">
-      <progress max={questionNum} value={index + Number(answer !== null)} />
-      <p>
-        Question <strong>{index + 1}</strong> / {questionNum}
-      </p>
+  const progressValue = ((index + Number(answer !== null)) / questionNum) * 100;
 
-      <p>
-        {points} / {totalPoints}
-      </p>
-    </header>
+  return (
+    <Container className="mb-4">
+      <ProgressBar
+        now={progressValue}
+        variant="info"
+        style={{
+          height: "12px",
+          backgroundColor: "var(--color-medium)",
+          borderRadius: "100px",
+        }}
+      />
+      <div className="d-flex justify-content-between mt-3">
+        <p className="mb-0">
+          Question <strong>{index + 1}</strong> / {questionNum}
+        </p>
+        <p className="mb-0">
+          Score <strong>{points}</strong> / {totalPoints}
+        </p>
+      </div>
+    </Container>
   );
 }
 
