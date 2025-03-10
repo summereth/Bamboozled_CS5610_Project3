@@ -6,6 +6,7 @@ import StartScreen from "./quiz/StartScreen.jsx";
 import Question from "../components/Question.jsx";
 import Progress from "../components/Progress.jsx";
 import Footer from "../components/Footer.jsx";
+import ResultScreen from "./quiz/ResultScreen.jsx";
 
 export default function QuizScreen() {
   const { status } = useQuiz();
@@ -21,7 +22,7 @@ export default function QuizScreen() {
           <Footer />
         </>
       )}
-      {status === "finished" && <h2>Quiz finished!</h2>}
+      {status === "finished" && <ResultScreen />}
     </Container>
   );
 }
