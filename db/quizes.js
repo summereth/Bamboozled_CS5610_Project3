@@ -73,4 +73,49 @@ async function insertOneQuiz(quiz) {
   }
 }
 
-export { insertOneQuiz, fetchAllQuizzes, fetchQuizById };
+async function updateOneQuizById(id, edited) {
+  const { client, collection } = getClientAndCollection();
+
+  try {
+    await client.connect();
+
+    const result = await collection.updateOne(
+      { _id: new ObjectId(id) },
+      { $set: edited },
+    );
+    return result;
+  } catch (error) {
+    console.error("[DB] Error updating quiz: ", error);
+    throw error;
+  } finally {
+    if (client) {
+      await client.close();
+    }
+  }
+}
+
+async function deleteOneQuizById(id) {
+  const { client, collection } = getClientAndCollection();
+
+  try {
+    await client.connect();
+
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+    return result;
+  } catch (error) {
+    console.error("[DB] Error deleting quiz: ", error);
+    throw error;
+  } finally {
+    if (client) {
+      await client.close();
+    }
+  }
+}
+
+export {
+  insertOneQuiz,
+  fetchAllQuizzes,
+  fetchQuizById,
+  updateOneQuizById,
+  deleteOneQuizById,
+};

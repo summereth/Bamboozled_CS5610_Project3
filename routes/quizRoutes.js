@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { insertOneQuiz, fetchAllQuizzes, fetchQuizById } from "../db/quizes.js";
+import {
+  insertOneQuiz,
+  fetchAllQuizzes,
+  fetchQuizById,
+  updateOneQuizById,
+  deleteOneQuizById,
+} from "../db/quizes.js";
 
 async function getQuizes(req, res) {
   try {
@@ -25,14 +31,32 @@ async function getQuizById(req, res) {
   }
 }
 
-function updateQuiz(req, res) {
-  console.log("PUT /:id", req);
-  res.send("hello world");
+async function updateQuiz(req, res) {
+  // validate req.body
+  if (!req.body.name) {
+    res.status(400).send("A new name is required");
+    return;
+  }
+
+  try {
+    const result = await updateOneQuizById(req.params.id, {
+      name: req.body.name,
+    }); // ignore any other modifications except name
+    res.json(result);
+  } catch (error) {
+    console.error("[Server] Error updating quiz:", error);
+    res.status(500).send(error);
+  }
 }
 
-function deleteQuiz(req, res) {
-  console.log("DELETE /:id", req);
-  res.send("hello world");
+async function deleteQuiz(req, res) {
+  try {
+    const result = await deleteOneQuizById(req.params.id);
+    res.json(result);
+  } catch (error) {
+    console.error("[Server] Error deleting quiz:", error);
+    res.status(500).send(error);
+  }
 }
 
 async function createQuiz(req, res) {
@@ -88,7 +112,7 @@ async function createQuiz(req, res) {
 
 const router = Router();
 router.get("/", getQuizes);
-router.route("/:id").get(getQuizById).put(updateQuiz).delete(deleteQuiz);
+router.route("/:id").get(getQuizById).patch(updateQuiz).delete(deleteQuiz);
 router.post("/create", createQuiz);
 
 export default router;
