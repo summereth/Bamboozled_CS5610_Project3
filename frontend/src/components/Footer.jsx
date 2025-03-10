@@ -6,6 +6,7 @@ function Footer() {
   const { answer, index, questionNum, hasTimer, secondsRemaining, dispatch } =
     useQuiz();
 
+  const hours = Math.floor(secondsRemaining / 3600);
   const mins = Math.floor(secondsRemaining / 60);
   const seconds = secondsRemaining - mins * 60;
 
@@ -23,7 +24,7 @@ function Footer() {
     <Container className="d-flex justify-content-between mt-3">
       {hasTimer && (
         <div className="timer">
-          {mins < 10 ? `0${mins}` : mins}:
+          {hours < 10 ? `0${hours}` : hours}:{mins < 10 ? `0${mins}` : mins}:
           {seconds < 10 ? `0${seconds}` : seconds}
         </div>
       )}
