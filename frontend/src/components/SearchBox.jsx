@@ -1,11 +1,20 @@
-import { useParams, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 
 const SearchBox = () => {
   const navigate = useNavigate();
-  const { keyword: urlKeyword } = useParams();
-  const [keyword, setKeyword] = useState(urlKeyword || "");
+  const location = useLocation();
+  const [keyword, setKeyword] = useState("");
+
+  useEffect(() => {
+    const path = location.pathname;
+    let urlKeyword = "";
+    if (path.startsWith("/search/")) {
+      urlKeyword = path.split("/search/")[1];
+    }
+    setKeyword(urlKeyword);
+  }, [location]);
 
   const submitHandler = (e) => {
     e.preventDefault();
