@@ -12,24 +12,28 @@ export default function Header() {
       <Container>
         <Navbar.Brand as={Link} to="/" className="fw-bold">
           <span className="d-flex align-items-center">
-            <div
-              className="bg-secondary rounded-circle d-inline-block me-2"
+            <img
+              className="me-2"
+              src="/icon.png"
+              alt="Icon of Bamboozled"
               style={{ width: "30px", height: "30px" }}
-            ></div>
+            />
             Bamboozled
           </span>
         </Navbar.Brand>
-        {isHomePage && <SearchBox />}
-        {isHomePage && (
-          <Button
-            as={Link}
-            to="/create"
-            variant="primary"
-            className="ms-auto rounded-pill"
-          >
-            Create a Quiz
-          </Button>
-        )}
+        <div className="d-flex align-items-center">
+          {isHomePage && <SearchBox />}
+          {isHomePage && (
+            <Button
+              as={Link}
+              to="/create"
+              variant="primary"
+              className="ms-3 rounded-pill"
+            >
+              Create a Quiz
+            </Button>
+          )}
+        </div>
       </Container>
     </Navbar>
   );

@@ -42,3 +42,8 @@ Claude 3.5 Sonnet assisted me in finishing this project.
 - Prompt: Help me understand bin/www.js file
 
 - Prompt: I wanna run frontend and backend separately (frontend ran by vite on port 5173 and backend on 3000). I have proxy setup in vite.config.js. However, when frontend requesting backend, I still got this error: Access to fetch at 'http://localhost:3000/api/quiz/create' from origin 'http://localhost:5173' has been blocked by CORS policy.
+
+#### Retrieve url path / routes param in React component
+
+- Prompt:
+  One problem on my SearchBox component is that it could never retrieve urlKeyWord by using useParams(), because Header component is not wrapped around Routes. How should I modify the code
