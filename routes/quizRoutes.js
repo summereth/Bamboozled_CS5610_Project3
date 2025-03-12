@@ -9,7 +9,8 @@ import {
 
 async function getQuizes(req, res) {
   try {
-    const quizzes = await fetchAllQuizzes();
+    const { keyword } = req.query || "";
+    const quizzes = await fetchAllQuizzes(keyword);
     res.json(quizzes);
   } catch (error) {
     console.error("[Server] Error fetching quizzes:", error);

@@ -1,7 +1,7 @@
 import { Container, Row, Col, Modal, Button, Form } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import QuizCard from "../components/QuizCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Loader from "../components/Loader.jsx";
 import { toast } from "react-toastify";
 import useLocalStorageState from "../hooks/useLocalStorageState.js";
@@ -11,6 +11,7 @@ export default function HomeScreen() {
   const [error, setError] = useState(null);
   const [quizzes, setQuizzes] = useState([]);
   const [highestScores] = useLocalStorageState({}, "highestScores");
+  const { keyword } = useParams();
 
   // for edit modal
   const [showEditModal, setShowEditModal] = useState(false);
@@ -20,9 +21,11 @@ export default function HomeScreen() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteQuizId, setDeleteQuizId] = useState(null);
 
-  const fetchQuizzes = async () => {
+  const fetchQuizzes = useCallback(async () => {
     try {
-      const response = await fetch("/api/quiz");
+      const response = await fetch(
+        `/api/quiz${keyword ? `?keyword=${keyword}` : ""}`,
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch quizzes");
       }
@@ -35,11 +38,11 @@ export default function HomeScreen() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [keyword]);
 
   useEffect(() => {
     fetchQuizzes();
-  }, []);
+  }, [fetchQuizzes]);
 
   const handleClickEditButton = (quizId) => {
     const quiz = quizzes.find((quiz) => quiz._id === quizId);

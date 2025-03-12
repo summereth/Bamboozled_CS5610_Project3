@@ -10,13 +10,20 @@ function getClientAndCollection() {
   return { client, collection };
 }
 
-async function fetchAllQuizzes() {
+async function fetchAllQuizzes(keyword = "") {
   const { client, collection } = getClientAndCollection();
 
   try {
     await client.connect();
 
-    const result = await collection.find().toArray();
+    const result = await collection
+      .find({
+        name: {
+          $regex: keyword,
+          $options: "i",
+        },
+      })
+      .toArray();
     return result;
   } catch (error) {
     console.error("[DB] Error getting all quizzes: ", error);

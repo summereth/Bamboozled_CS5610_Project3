@@ -17,6 +17,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomeScreen />} />
+          <Route path="/search/:keyword" element={<HomeScreen />} />
           <Route path="/create" element={<CreateQuizScreen />} />
           <Route
             path="/quiz/:id"
