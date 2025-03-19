@@ -22,4 +22,12 @@ app.use(express.static(path.join(__dirname, "frontend/dist")));
 // routes
 app.use("/api/quiz", quizRoutes);
 
+// catch-all route to handle client-side routing
+app.get("*", (req, res) => {
+  // handle non-API routes with this catch-all
+  if (!req.path.startsWith("/api/")) {
+    res.sendFile(path.join(__dirname, "frontend/dist/index.html"));
+  }
+});
+
 export default app;
