@@ -1,5 +1,5 @@
-import { Container } from "react-bootstrap";
 import useQuiz from "../contexts/useQuiz";
+import "./Question.css";
 
 function Question() {
   const { questions, index, answer, dispatch } = useQuiz();
@@ -16,8 +16,8 @@ function Question() {
               hasAnswer && i === question.correctOption
                 ? "correct"
                 : hasAnswer
-                ? "wrong"
-                : ""
+                  ? "wrong"
+                  : ""
             }`}
             key={option}
             disabled={hasAnswer}

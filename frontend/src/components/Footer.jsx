@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import useQuiz from "../contexts/useQuiz";
 import { Container } from "react-bootstrap";
+import "./Footer.css";
 
 function Footer() {
   const { answer, index, questionNum, hasTimer, secondsRemaining, dispatch } =
