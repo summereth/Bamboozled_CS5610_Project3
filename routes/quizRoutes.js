@@ -6,6 +6,11 @@ import {
   updateOneQuizById,
   deleteOneQuizById,
 } from "../db/quizes.js";
+import {
+  fetchQuestionsById,
+  insertQuestions,
+  deleteQuestionsById,
+} from "../db/questions.js";
 
 async function getQuizes(req, res) {
   try {
@@ -13,7 +18,6 @@ async function getQuizes(req, res) {
     const quizzes = await fetchAllQuizzes(keyword);
     res.json(quizzes);
   } catch (error) {
-    console.error("[Server] Error fetching quizzes:", error);
     res.status(500).send(error);
   }
 }
@@ -21,13 +25,17 @@ async function getQuizes(req, res) {
 async function getQuizById(req, res) {
   try {
     const quiz = await fetchQuizById(req.params.id);
-    if (!quiz) {
+    const questions = await fetchQuestionsById(req.params.id);
+    if (!quiz || !questions) {
       res.status(404).send("Quiz not found");
       return;
     }
-    res.json(quiz);
+    const quizDetails = {
+      ...quiz,
+      questions: questions.questions,
+    };
+    res.json(quizDetails);
   } catch (error) {
-    console.error("[Server] Error fetching quiz by id:", error);
     res.status(500).send(error);
   }
 }
@@ -45,7 +53,6 @@ async function updateQuiz(req, res) {
     }); // ignore any other modifications except name
     res.json(result);
   } catch (error) {
-    console.error("[Server] Error updating quiz:", error);
     res.status(500).send(error);
   }
 }
@@ -53,9 +60,9 @@ async function updateQuiz(req, res) {
 async function deleteQuiz(req, res) {
   try {
     const result = await deleteOneQuizById(req.params.id);
+    await deleteQuestionsById(req.params.id);
     res.json(result);
   } catch (error) {
-    console.error("[Server] Error deleting quiz:", error);
     res.status(500).send(error);
   }
 }
@@ -99,14 +106,18 @@ async function createQuiz(req, res) {
       (prev, curr) => prev + Number(curr.points),
       0,
     ),
-    questions,
   };
 
   try {
-    const result = await insertOneQuiz(newQuiz);
+    const quizResult = await insertOneQuiz(newQuiz);
+    const quizId = quizResult.insertedId;
+    if (!quizId) {
+      res.status(500).send("Failed to create quiz");
+      return;
+    }
+    const result = await insertQuestions(questions, quizId);
     res.json(result);
   } catch (error) {
-    console.error("[Server] Error creating quiz:", error);
     res.status(500).send(error);
   }
 }

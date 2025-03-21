@@ -1,11 +1,13 @@
 import { MongoClient, ObjectId } from "mongodb";
 
+const collectionName = "quiz";
+
 function getClientAndCollection() {
   const mongo_uri = process.env.MONGO_URI || "mongodb://localhost:27017";
 
   const client = new MongoClient(mongo_uri);
   const db = client.db(process.env.DB_NAME);
-  const collection = db.collection("quiz");
+  const collection = db.collection(collectionName);
 
   return { client, collection };
 }
@@ -55,20 +57,11 @@ async function fetchQuizById(id) {
 
 async function insertOneQuiz(quiz) {
   const { client, collection } = getClientAndCollection();
-  const newQuiz = {
-    ...quiz,
-    questions: quiz.questions.map((question) => ({
-      ...question,
-      _id: new ObjectId(),
-      points: Number(question.points),
-      correctOption: Number(question.correctOption),
-    })),
-  };
 
   try {
     await client.connect();
 
-    const result = await collection.insertOne(newQuiz);
+    const result = await collection.insertOne(quiz);
     return result;
   } catch (error) {
     console.error("[DB] Error inserting plan: ", error);

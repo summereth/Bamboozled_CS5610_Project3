@@ -76,12 +76,20 @@ Copy `.example.env` file and change the name to `.env`. Modify environment varia
 
 ### Does it use at least 2 Mongo Collections, supporting CRUD operations on them?
 
-Only 1 collection is used in the project. I could have divided my quiz collection into 2 collections, quiz collection and question collection (foreign key: quizId). But I decide the nested structrue is more concise and serves enough for my project. And here are my reasons:
-
-- Quizzes have a predictable, manageable number of questions (well below the 16MB limit)
-- I typically need to load the entire quiz with all questions except on homepage
-- Question updates are infrequent. Right now I only support quiz name update.
-- Questions are NOT shared across multiple quizzes. Thus, nested data saves multiple queries or aggregation to retrieve complete data, and avoid complex to maintain referential integrity.
+- 2 collections (quiz and question) are used. See `/db` folder.
+- CRUD on colleciton `quiz`:
+  - features:
+    - [create quiz](https://bamboozled-theta.vercel.app/create)
+    - [quiz list](https://bamboozled-theta.vercel.app/)
+    - [update quiz name](https://bamboozled-theta.vercel.app/)
+    - [delete quiz](https://bamboozled-theta.vercel.app/)
+  - backend API: see `routes/quizRoutes.js`
+- CRD on collection `question`:
+  - feature:
+    - [create quiz](https://bamboozled-theta.vercel.app/create)
+    - [quiz list](https://bamboozled-theta.vercel.app/)
+    - [delete quiz](https://bamboozled-theta.vercel.app/)
+  - backend API: see `routes/quizRoutes.js`
 
 ### Is the database populated with at least 1k synthetic records?
 
@@ -89,9 +97,9 @@ Though I only have 24 quizzes. Questions from those quizzes in total are over 10
 
 ## Other documents
 
-- [Google Slides]()
-- [Video Walkthrough]()
-- [Design_Document]()
+- [Google Slides](https://docs.google.com/presentation/d/1SpAAdwCdAoXYDZog9k_A53dew7cwrjwyP1ThpTuGRH4/edit?usp=sharing)
+- [Video Walkthrough](https://youtu.be/0fxK6_J6Jjc)
+- [Design_Document](./docs/design_doc.md)
 
 ## GenAI usage
 

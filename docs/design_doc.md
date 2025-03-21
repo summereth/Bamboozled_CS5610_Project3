@@ -2,103 +2,107 @@
 
 ## Project Description
 
-The Fitness Record Application simplifies workout planning by providing users with a comprehensive exercise library and workout planning capabilities. The application focuses on two core features: a pre-populated exercise library for reference and a workout plan creator for organizing training sessions.
+Bamboozled is an interactive quiz platform similar to Quizlet that allows users to test their knowledge through multiple-choice questions. The platform offers predefined quizzes on technical topics (AWS, React) and entertainment (FRIENDS TV show), while also enabling users to create custom quizzes by uploading files. Bamboozled tracks user progress and high scores using browser localStorage (eliminating the need for user accounts), creating an engaging learning environment accessible to users of all backgrounds.
 
-### Core Features
+## Core Features
 
-#### 1. Exercise Library
+### 1. Interactive Quiz Experience
 
-- Pre-populated database of exercises
-- Each exercise includes:
-  - Name
-  - Detailed description, including tips
-  - Target muscle groups
-- Users can browse and view exercise details
-- Search and filter functionality
-  - User select a muscle group and view filtered exercises
+- Multiple-choice question format with immediate feedback
+- Score tracking and results display
+- Simple, intuitive quiz interface
 
-#### 2. Workout Plan Creator
+### 2. User Progress Tracking
 
-- Create personalized workout plans
-- Set plan name
-- Select exercises from the library
-- Specify sets, reps, and weights for each exercise
-- Save and view created workout plans
+- Local storage-based user data persistence (no account required)
+- Quiz history and highest scores saved on user's device
+- Optional: Account system for cross-device synchronization (future enhancement)
+
+### 3. Predefined Quiz Library
+
+- AWS certification preparation quizzes
+- React development concept quizzes
+- FRIENDS TV show trivia at various difficulty levels
+
+### 4. Custom Quiz Creation
+
+- File upload functionality (CSV, TXT, XLSX)
+- Simple template system for quiz creation
+- Options to keep quizzes private or share publicly
 
 ## User Personas
 
-### Emily - The Gym Newcomer
+### 1. Alex - The Technology Professional
 
-- **Demographics:** 28 years old, marketing professional
-- **Goals:**
-  - Learn about different exercises
-  - Create structured workout routines
-- **Pain Points:**
-  - Overwhelmed by exercise variety
-  - Unsure how to structure workouts
-  - Needs guidance on exercise selection
-- **Usage Patterns:**
-  - Frequently references exercise descriptions
-  - Creates basic workout plans
-  - Prefers simple, straightforward interfaces
+**Demographics**: 28-year-old software developer preparing for AWS certification
 
-### Mike - The Regular Gym-Goer
+**Goals**:
 
-- **Demographics:** 35 years old, software developer
-- **Goals:**
-  - Organize workout routines efficiently
-  - Access detailed exercise information
-  - Create varied workout plans
-- **Pain Points:**
-  - Wants to organize workouts systematically
-  - Needs quick access to exercise details
-  - Requires flexibility in workout planning
-- **Usage Patterns:**
-  - Creates multiple workout plans
-  - References exercise details for form reminders
-  - Regularly updates workout parameters
+- Study efficiently for certification exams
+- Track progress to identify knowledge gaps
+
+**Pain Points**:
+
+- Limited time for study between work commitments
+- Difficulty finding quality practice tests
+- Needs focused content relevant to certification requirements
+
+### 2. Sarah - The Entertainment Fan
+
+**Demographics**: 24-year-old marketing coordinator and FRIENDS enthusiast
+
+**Goals**:
+
+- Test knowledge about favorite TV show
+- Compete with friends for highest scores
+
+**Pain Points**:
+
+- Bored with static trivia websites
+- Wants fresh content regularly
+- Prefers mobile-friendly platforms for commute entertainment
+
+### 3. Professor Rodriguez - The Educator
+
+**Demographics**: 45-year-old Computer Science professor teaching React
+
+**Goals**:
+
+- Create custom quizzes for students
+- Monitor student performance
+
+**Pain Points**:
+
+- Limited time to create assessment materials
+- Needs easy-to-use tools that don't require technical setup
+- Wants to provide students with self-assessment options
 
 ## User Stories
 
-### Exercise Library
+### For Alex (Technology Professional)
 
-1. As a user, I want to browse all available exercises so that I can learn about different workout options
+1. **Quiz Selection**: As Alex, I want to browse AWS certification quizzes by certification level (Associate, Professional, Specialty) so I can focus on relevant material.
+2. **Progress Tracking**: As Alex, I want to see my performance history on previous quiz attempts so I can track my improvement over time.
+3. **Knowledge Gap Identification**: As Alex, I want to review my incorrect answers after completing a quiz so I can focus my studies on weak areas.
+4. **Study Time Management**: As Alex, I want to select quizzes of varying lengths (5, 10, or 20 questions) so I can fit study sessions into my busy schedule.
+5. **Mobile Access**: As Alex, I want to access quizzes on my mobile device so I can study during my commute.
 
-   - View list of all exercises grouped by muscle groups
-   - Access detailed description and tips for each exercise
+### For Sarah (Entertainment Fan)
 
-2. As a user, I want to filter exercises by category so that I can find specific types of exercises
+1. **Difficulty Levels**: As Sarah, I want to select FRIENDS trivia quizzes by difficulty level so I can challenge myself as my knowledge improves.
+2. **Social Sharing**: As Sarah, I want to share my quiz results on social media so I can challenge my friends.
+3. **New Content**: As Sarah, I want to see newly added quizzes highlighted so I can find fresh content easily.
+4. **Themed Quizzes**: As Sarah, I want to access season-specific or character-specific FRIENDS quizzes so I can test specialized knowledge.
+5. **Leaderboard**: As Sarah, I want to see a local leaderboard of my previous attempts so I can try to beat my own records.
 
-   - Filter by exercise category (muscle group)
-   - View filtered results
-   - Reset filters as needed
+### For Professor Rodriguez (Educator)
 
-### Workout Plan Creator
-
-1. As a user, I want to create a new workout plan so that I can organize my training
-
-   - Enter plan name
-   - Save basic plan details
-
-2. As a user, I want to add exercises to my workout plan so that I can structure my training
-
-   - Browse exercise library
-   - Select exercises for the plan
-   - Specify order of exercises
-
-3. As a user, I want to set specific parameters for each exercise so that I can define my workout intensity
-
-   - Set number of sets
-   - Specify reps per set
-   - Input target weights
-
-4. As a user, I want to view my saved workout plans so that I can access them during training
-   - Access list of saved plans
-   - View plan details
-   - See all exercises and parameters
+1. **Custom Quiz Creation**: As Professor Rodriguez, I want to create custom React quizzes by uploading questions in a CSV file so I can provide tailored assessments.
+2. **Quiz Templates**: As Professor Rodriguez, I want to use quiz templates so I can quickly create well-structured assessments.
+3. **Quiz Sharing**: As Professor Rodriguez, I want to generate shareable links for my quizzes so students can access them easily.
+4. **Question Bank**: As Professor Rodriguez, I want to maintain a personal question bank so I can reuse and remix questions for different classes.
+5. **Quiz Analytics**: As Professor Rodriguez, I want to see aggregated quiz results if students share them so I can identify topics that need more classroom attention.
 
 ## Design Mockup
 
-[Figma](https://www.figma.com/design/hZOJtxIxFm480Q9flBV4eZ/CS5610_Project_Design?node-id=8-3&t=jf6I4Lh2K87DHxbU-1)
-
-![Mockup Design](images/mockup.png)
+The complete design mockup is available in [Figma](https://www.figma.com/design/hZOJtxIxFm480Q9flBV4eZ/CS5610_Project_Design?node-id=16-2).
