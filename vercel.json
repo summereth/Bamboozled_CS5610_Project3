@@ -16,6 +16,11 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "app.js" },
+    {
+      "src": "/(.*\\.(js|css|svg|jpg|jpeg|png|gif|ico|json|woff|woff2|ttf|eot))",
+      "dest": "/frontend/dist/$1",
+      "headers": { "cache-control": "public, max-age=31536000, immutable" }
+    },
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "app.js" }
   ]
